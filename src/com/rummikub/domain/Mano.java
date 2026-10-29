@@ -15,7 +15,7 @@ public class Mano {
         return Collections.unmodifiableList(fichas);
     }
 
-    public int tamanio() {
+    public int size() { // <-- Cambiado de tamanio() a size()
         return fichas.size();
     }
 

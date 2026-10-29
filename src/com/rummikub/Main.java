@@ -25,9 +25,9 @@ public class Main {
 
         System.out.println("Partida iniciada correctamente.");
         System.out.println("Fichas restantes en el pozo: " + juego.getPozo().cantidadRestante());
-        System.out.println("\nMano inicial de " + p1.getNombre() + " (" + p1.getMano().tamanio() + " fichas):");
+        System.out.println("\nMano inicial de " + p1.getNombre() + " (" + p1.getMano().size() + " fichas):");
         System.out.println(p1.getMano());
-        System.out.println("\nMano inicial de " + p2.getNombre() + " (" + p2.getMano().tamanio() + " fichas):");
+        System.out.println("\nMano inicial de " + p2.getNombre() + " (" + p2.getMano().size() + " fichas):");
         System.out.println(p2.getMano());
 
         // Prueba del patrón Strategy y simulación de cambio de turno con Observer
