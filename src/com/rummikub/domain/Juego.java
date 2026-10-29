@@ -8,6 +8,9 @@ public class Juego {
     private final Pozo pozo;
     private final Mesa mesa;
     private int turnoActualIdx;
+    
+    // 1. Lista de observadores (Patrón Observer)
+    private final List<IObservadorJuego> observadores = new ArrayList<>();
 
     public Juego() {
         this.pozo = new Pozo();
@@ -25,6 +28,21 @@ public class Juego {
         jugadores.add(j);
     }
 
+    // 2. Métodos para gestionar observadores
+    public void agregarObservador(IObservadorJuego obs) {
+        observadores.add(obs);
+    }
+
+    public void eliminarObservador(IObservadorJuego obs) {
+        observadores.remove(obs);
+    }
+
+    public void notificarObservadores(String mensaje) {
+        for (IObservadorJuego obs : observadores) {
+            obs.actualizar(mensaje);
+        }
+    }
+
     public void iniciarPartida() {
         if (jugadores.size() < 2) {
             throw new IllegalStateException("Se necesitan al menos 2 jugadores.");
@@ -35,6 +53,8 @@ public class Juego {
                 j.getMano().agregarFicha(pozo.robar());
             }
         }
+        // Notificamos que la partida ha comenzado
+        notificarObservadores("Partida iniciada con " + jugadores.size() + " jugadores.");
     }
 
     public Jugador getJugadorActual() {
@@ -43,6 +63,8 @@ public class Juego {
 
     public void pasarTurno() {
         turnoActualIdx = (turnoActualIdx + 1) % jugadores.size();
+        // Notificamos el cambio de turno automáticamente a los observadores
+        notificarObservadores("El turno ha cambiado. Ahora es el turno de: " + getJugadorActual().getNombre());
     }
 
     public Pozo getPozo() { return pozo; }
