@@ -13,13 +13,13 @@ public class GrupoMeld extends Meld {
     @Override
     public boolean esValido() {
         if (fichas == null || fichas.size() < 3 || fichas.size() > 4) return false;
-        
+
         int valorObjetivo = -1;
         Set<Color> colores = new HashSet<>();
 
         for (Ficha f : fichas) {
             if (f.esComodin()) continue;
-            
+
             if (valorObjetivo == -1) {
                 valorObjetivo = f.getValor();
             } else if (f.getValor() != valorObjetivo) {
@@ -31,11 +31,20 @@ public class GrupoMeld extends Meld {
             }
             colores.add(f.getColor());
         }
-        return true;
+        return valorObjetivo != -1;
     }
 
     @Override
     public int calcularPuntos() {
-        return fichas.stream().mapToInt(Ficha::getValor).sum();
+        int valorBase = fichas.stream()
+                .filter(f -> !f.esComodin())
+                .mapToInt(Ficha::getValor)
+                .findFirst()
+                .orElse(0);
+        int total = 0;
+        for (Ficha f : fichas) {
+            total += f.esComodin() ? valorBase : f.getValor();
+        }
+        return total;
     }
 }

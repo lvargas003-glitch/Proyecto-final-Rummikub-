@@ -1,5 +1,7 @@
 package com.rummikub.domain;
 
 public interface IComando {
-    void ejecutar();
+    boolean ejecutar();
+    boolean deshacer();
+    String descripcion();
 }

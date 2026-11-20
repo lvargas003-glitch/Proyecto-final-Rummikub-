@@ -19,7 +19,7 @@ public class Pozo {
     private void inicializar(Random random) {
         fichas.clear();
         Color[] colores = {Color.NEGRO, Color.AZUL, Color.ROJO, Color.AMARILLO};
-        
+
         for (int i = 0; i < 2; i++) {
             for (Color c : colores) {
                 for (int v = 1; v <= 13; v++) {
@@ -36,6 +36,12 @@ public class Pozo {
     public Ficha robar() {
         if (fichas.isEmpty()) return null;
         return fichas.remove(fichas.size() - 1);
+    }
+
+    public void devolverFicha(Ficha f) {
+        if (f != null) {
+            fichas.add(f);
+        }
     }
 
     public int cantidadRestante() {

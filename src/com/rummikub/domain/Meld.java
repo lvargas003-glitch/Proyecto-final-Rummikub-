@@ -1,18 +1,33 @@
 package com.rummikub.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Meld {
-    protected List<Ficha> fichas;
+public abstract class Meld implements IComponenteTablero {
+    protected final List<Ficha> fichas;
 
     public Meld(List<Ficha> fichas) {
-        this.fichas = fichas;
+        this.fichas = new ArrayList<>(fichas);
     }
 
     public abstract boolean esValido();
-    public abstract int calcularPuntos();
+
+    @Override
+    public int calcularPuntos() {
+        return fichas.stream().mapToInt(Ficha::calcularPuntos).sum();
+    }
+
+    @Override
+    public int contarFichas() {
+        return fichas.size();
+    }
 
     public List<Ficha> getFichas() {
-        return fichas;
+        return List.copyOf(fichas);
+    }
+
+    @Override
+    public String toString() {
+        return fichas.toString();
     }
 }
